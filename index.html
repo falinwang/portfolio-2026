@@ -229,7 +229,7 @@
       <div class="dec-row">
         <div class="dec-idx">01</div>
         <div><h3>Supplement, never replacement</h3>
-          <p class="d-body">The AI reads the existing area-of-practice answers and the user&rsquo;s message, then asks what&rsquo;s missing. The AOP-specific questions stay exactly where they are.</p>
+          <p class="d-body">The AI reads the existing area-of-practice answers and the user&rsquo;s message, then asks what&rsquo;s missing. The AOP-specific questions stay exactly where they are &mdash; existing sets already had testing behind them, and changing them was out of MVP scope. The AI questions stack after Next.</p>
           <p class="d-note"><span class="src">Source:</span> the brief requires AI questions to be created <em>after</em> the AOP-specific questions and message are complete.</p>
         </div>
         <div class="d-side"></div>
@@ -246,7 +246,7 @@
         <div class="dec-idx">03</div>
         <div><h3>A 100-character floor on the case description</h3>
           <p class="d-body">The model needs narrative to work with instead of guessing from near-empty input. Below the floor, no AI questions are generated &mdash; the base flow continues unchanged.</p>
-          <p class="d-note"><span class="src">Source:</span> heuristic evaluation (&ldquo;validate input quality&rdquo; before AI); the 100-character minimum is the verified product rule.</p>
+          <p class="d-note"><span class="src">Source:</span> heuristic evaluation (&ldquo;validate input quality&rdquo; before AI); the 100-character minimum is the verified product rule. Gibberish input doesn&rsquo;t trigger the AI at all.</p>
         </div>
         <div class="d-side"></div>
       </div>
@@ -274,6 +274,22 @@
         </div>
         <div class="d-side"></div>
       </div>
+      <div class="dec-row">
+        <div class="dec-idx">07</div>
+        <div><h3>Placement was explored, not assumed</h3>
+          <p class="d-body">Two options were prototyped: AI questions between the message block and the CTA, versus grouped in blue beside the contact fields. Option 1 won &mdash; on mobile, the second option&rsquo;s scroll behavior made newly appeared fields easy to miss.</p>
+          <p class="d-note"><span class="src">Source:</span> round 1 review supported Option 1; the gear.law proof of concept informed the layout.</p>
+        </div>
+        <div class="d-side"></div>
+      </div>
+      <div class="dec-row">
+        <div class="dec-idx">08</div>
+        <div><h3>Personalization has a boundary</h3>
+          <p class="d-body">The AI block header keeps the attorney&rsquo;s name; the supporting sub-text stays generic. Personalized sub-text would create a dev dependency, and Avvo and FindLaw may share the same prompt &mdash; so the design can&rsquo;t assume personalized data is available.</p>
+          <p class="d-note"><span class="src">Open:</span> whether the header can safely be personalized still needs dev confirmation on the data source &mdash; a valid concern raised in review.</p>
+        </div>
+        <div class="d-side"></div>
+      </div>
     </div>
     <div class="pattern-note">
       <p class="k">Why this shape</p>
@@ -289,11 +305,11 @@
     <ul class="change-list">
       <li>
         <span class="n">A</span>
-        <p>Sticky CTA became non-sticky. The interactive prototype tested both; the direction that held was a non-sticky call to action, restoring a linear top-to-bottom path (&ldquo;Sign Up to Securely Send&rdquo; logged out, &ldquo;Submit My Message&rdquo; logged in).</p>
+        <p>Sticky CTA became non-sticky. The prototype explored both; I chose the non-sticky call to action, restoring a linear top-to-bottom path (&ldquo;Sign Up to Securely Send&rdquo; logged out, &ldquo;Submit My Message&rdquo; logged in).</p>
       </li>
       <li>
         <span class="n">B</span>
-        <p>AI questions moved to after Next. Mid-form questions interrupted writing; after Next, the questions read as a natural follow-up to a completed draft.</p>
+        <p>AI questions moved to after Next. The heuristic evaluation recommended validating input quality before triggering AI; after Next, the questions read as a natural follow-up to a completed draft.</p>
       </li>
     </ul>
     <div class="proto-grid">
@@ -316,11 +332,11 @@
     <div class="safety-grid">
       <div class="cell">
         <h3>Honest framing</h3>
-        <p>The disclaimer tells users not to include sensitive information, and that no attorney&ndash;client relationship forms until an attorney agrees. The AI is presented as intake help, not legal advice.</p>
+        <p>The disclaimer tells users not to include sensitive information, and that no attorney&ndash;client relationship forms until an attorney agrees. It stays as &ldquo;By submitting this form&hellip;&rdquo; text with no checkbox &mdash; the submit action itself constitutes consent. The AI is presented as intake help, not legal advice.</p>
       </div>
       <div class="cell">
         <h3>The account gate stayed a constraint</h3>
-        <p>The signup gate predated the AI work and exists to reduce abuse and spam reaching attorney inboxes. With no completion-rate data, I treated it as a fixed business constraint &mdash; one more reason the AI questions stayed optional.</p>
+        <p>The signup gate predated the AI work and stayed as a fixed business constraint &mdash; its effect on completion rates was never evaluated, one more reason the AI questions stayed optional. Whether the form is discarded when signup isn&rsquo;t completed was raised in review and remains unconfirmed.</p>
       </div>
       <div class="cell">
         <h3>Guardrails at the UI layer, debt logged</h3>
@@ -336,10 +352,10 @@
     <p class="reflect-statement">Next time, I&rsquo;d define message quality before drawing the screen.</p>
     <div class="cols2 body-copy">
       <div>
-        <p>The heuristic evaluation taught me that the input floor &mdash; what counts as &ldquo;enough&rdquo; for the model to ask something useful &mdash; is a design decision, not a validation afterthought. It shaped the 100-character rule, the after-Next timing, and the silent timeout alike.</p>
+        <p>The heuristic evaluation taught me that the input floor &mdash; what counts as &ldquo;enough&rdquo; for the model to ask something useful &mdash; is a design decision, not a validation afterthought. It shaped the 100-character rule, the after-Next timing, and the silent timeout alike. Round 1 was received positively, and the placement exploration settled on Option 1 for its mobile scroll behavior.</p>
       </div>
       <div>
-        <p>What this work demonstrates: scoping an open-ended AI brief into something shippable inside a fixed window, making decisions a prototype can actually test, and holding the line on what the evidence does and doesn&rsquo;t support.</p>
+        <p>What this work demonstrates: scoping an open-ended AI brief into something buildable inside a fixed window, making decisions a prototype can actually test, and holding the line on what the evidence does and doesn&rsquo;t support.</p>
       </div>
     </div>
     <p class="integrity">A note on evidence: this page claims no conversion, adoption, or performance numbers. What&rsquo;s shown is what the brief, the research, and the prototype can each back up &mdash; and the interview deck holds the rest.</p>
